@@ -28,6 +28,42 @@ class ChangeNoteActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
 
         // START YOUR CHANGE
+
+        val noteType = intent.getStringExtra("noteType")
+        var note_ID :UUID = UUID.randomUUID()
+
+        if (noteType.equals("Edit")) {
+            val noteIndice = intent.getStringExtra("noteID")
+
+            var note = NoteLab.getNote(UUID.fromString(noteIndice))
+
+            note_ID = note!!.id
+            viewBinding.etTitle.setText(note!!.title)
+            viewBinding.etDescription.setText(note!!.description)
+
+        }
+
+        viewBinding.bSave.setOnClickListener {
+            if (viewBinding.etTitle.text.trim().isNotEmpty()) {
+
+                if (noteType.equals("Edit")) {
+
+                    NoteLab.updateNote(Note(id=note_ID,description = viewBinding.etDescription.text.toString(), title = viewBinding.etTitle.text.toString()))
+
+                } else {
+
+                    NoteLab.addNote(Note(description = viewBinding.etDescription.text.toString(), title = viewBinding.etTitle.text.toString()))
+
+                }
+
+                val intent = Intent(this@ChangeNoteActivity, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            else   viewBinding.etTitle.error=getString(R.string.field_not_be_empty_error)
+
+        }
+
         // END YOUR CHANGE
     }
 }

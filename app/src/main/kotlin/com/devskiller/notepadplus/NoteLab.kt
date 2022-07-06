@@ -18,6 +18,10 @@ object NoteLab {
         note.id == uuid
     }
 
+    fun updateNote(note: Note) {
+        mNotes?.filter { it.id == note.id }.forEach { it.title=note.title;it.description=note.description}
+    }
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal fun clear() = mNotes.clear()
 }

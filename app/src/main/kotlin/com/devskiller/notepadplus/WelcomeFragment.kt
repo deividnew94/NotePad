@@ -19,6 +19,7 @@ class WelcomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // START REFACTOR OF THIS METHOD
+        inflater.inflate(R.layout.fragment_welcome, container)
         // END REFACTOR OF THIS METHOD
         return super.onCreateView(inflater, container, savedInstanceState)
     }
